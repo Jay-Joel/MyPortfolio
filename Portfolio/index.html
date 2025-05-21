@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- CDN mis à jour pour Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    html, body {
+      height: 100%;
+      flex-direction: column;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      padding-top: 60px;
+    }
+
+    .navbar {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: black;
+    }
+
+    .navbar-nav .nav-link {
+      position: relative;
+      color: black;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      z-index: 1;
+    }
+
+    .navbar-nav .nav-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #007bff;
+      border-radius: 0.5rem;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .navbar-nav .nav-link.active-bubble::before {
+      opacity: 1;
+    }
+
+    .navbar-nav .nav-link.active-bubble {
+      color: white;
+    }
+
+    .hero-image {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/Portfolio_Background.png");
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
+    .hero-text {
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    .hero-text h1 {
+      font-size: 50px;
+      white-space: nowrap;
+    }
+
+    .hero-text p {
+      font-size: 24px;
+    }
+
+    .hero-text button {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 10px 25px;
+      color: black;
+      background-color: #ddd;
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-text button:hover {
+      background-color: #007bff;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    #a-propos { background-color: #FFFFFF; }
+    #parcours { background-color: #F5F5F5; }
+    #projets { background-color: #FFFFFF; }
+    #veille-technologique { background-color: #F5F5F5; }
+
+    footer {
+      margin-top: auto;
+    }
+
+    .social-icons a {
+      color: black;
+      margin-left: 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+      vertical-align: middle; /* Correction du problème d'alignement */
+      line-height: 0; /* Suppression de l'espace vertical */
+      display: inline-block; /* S'assurer que l'icône soit considérée comme un bloc inline */
+      text-decoration: none; /* Retirer le soulignement des icônes */
+      padding-bottom: 5px; /* Petite compensation pour les bas de texte */
+    }
+
+    .social-icons a:hover {
+      color: #bbb;
+    }
+
+    .column {
+float: left;
+width: 50%;
+padding: 15px;
+}
+
+.row::after {
+content: "";
+display: table;
+clear: both;
+}
+
+@media screen and (max-width:600px) {
+.column {
+width: 100%;
+}
+}
+
+.paragraph {
+      overflow: hidden; /* utile pour contenir les flottants */
+      margin-bottom: 20px;
+    }
+
+    .gif-left {
+      float: left;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+
+    .gif-right {
+      float: right;
+      margin-left: 10px;
+      border-radius: 8px;
+    }
+
+    .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 10px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background-color: #2196F3;
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 20px 60px;
+    }
+
+    .timeline-item .content {
+      background-color: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-size: 1rem;
+    }
+
+    .timeline-item.left {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item.right {
+      left: 50%;
+      text-align: left;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      top: 30px;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border: 4px solid #2196F3;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-item.left::after {
+      right: -10px;
+    }
+
+    .timeline-item.right::after {
+      left: -10px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 60px;
+        padding-right: 25px;
+        text-align: left;
+      }
+
+      .timeline-item.right,
+      .timeline-item.left {
+        left: 0;
+      }
+
+      .timeline-item::after {
+        left: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Jay Joël MASSAMBA DIMONEKENE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#hero-image">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link" href="#a-propos">À propos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#parcours">Parcours</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
+        <li class="nav-item"><a class="nav-link" href="#veille-technologique">Veille Technologique</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Image -->
+<div id="hero-image" class="hero-image">
+  <div class="hero-text">
+    <h1>Jay Joël MASSAMBA DIMONEKENE</h1>
+    <p>Développeur - BTS SIO SLAM</p>
+    <a href="pdf/CV_Jay_Joël_MASSAMBA_DIMONEKENE.pdf" target="_blank">
+      <button>Mon CV</button>
+    </a>
+  </div>
+</div>
+
+<!-- Sections -->
+<section id="a-propos">
+  <h1 style="text-align:center"><b>À propos</b></h1>
+  <p>
+    Je m'appelle Jay Joël MASSAMBA DIMONEKENE. Titulaire d’un Baccalauréat Assistance à la Gestion
+    des Organisations et de leurs Activités, je suis actuellement en deuxième année de BTS Services
+    Informatiques aux Organisations Option Solutions Logicielles et Applications Métiers au sein du CFA ITIS situé à Evry-Courcouronnes.
+    Ce diplôme me permettra de développer mes compétences en matière de développement dont les langages de
+    programmation, la résolution de problèmes et la gestion de projet. Créatif, j’aime imaginer de
+    beaux visuels pour les sites internet et attiré par la résolution de problème, j’aime répondre
+    aux besoins technologiques qui me sont proposés.
+  </p>
+  
+  <h1 style="text-align:center">Qu'est-ce que le BTS SIO ?</h1>
+  
+  <div class="row">
+      <div class="column">
+          <h2>Option SISR</h2>
+          <p>L'acronyme SISR signifie « Solutions d'infrastructure, systèmes et réseaux ».
+              Voici des précisions sur cette formation et ses débouchés.
+              <br>L'option SISR est destinée aux étudiants qui s'orientent vers les métiers liés à la
+              conception et la maintenance d'infrastructures réseaux. Assurer la sécurité, la
+              maintenance et l'installation des réseaux et des équipements informatiques font
+              partie des principales missions des futurs administrateurs, techniciens ou pilotes
+              d'exploitation.
+              <br>Des cours plus généraux viendront compléter la formation et apporter des compétences
+              plus généralistes, permettant ainsi aux diplômés d'être opérationnels dans n'importe
+              quelle entreprise.</p>
+              <p>Voici les débouchés avec un BTS SIO SISR :</p>
+              <ul>
+                  <li>Technicien de production</li>
+                  <li>Technicien d'infrastructure</li>
+                  <li>Technicien réseau et télécoms</li>
+                  <li>Technicien systèmes et réseaux</li>
+                  <li>Administrateur systèmes et réseaux</li>
+                  <li>Support systèmes et réseaux</li>
+                  <li>Pilote d'exploitation</li>
+                  <li>Informaticien support et déploiement</li>
+              </ul>
+  </div>
+  
+  <div class="column">
+          <h2>Option SLAM</h2>
+          <p>Le signe SLAM signifie « Solutions Logicielles et Applications Métiers ». Voici
+              quelques indications sur cette seconde option du BTS SIO, ainsi des précisions sur
+              cette formation et ses débouchés.
+          <br>L'option SISR est destinée aux étudiants qui s'orientent vers les métiers liés à la
+          conception et la maintenance d'infrastructures réseaux. Assurer la sécurité, la
+          maintenance et l'installation des réseaux et des équipements informatiques font partie
+          des principales missions des futurs administrateurs, techniciens ou pilotes
+          d'exploitation.
+          <br>Des cours plus généraux viendront compléter la formation et apporter des compétences
+          plus généralistes, permettant ainsi aux diplômés d'être opérationnels dans n'importe
+          quelle entreprise.</p>
+          <p>Voici les débouchés avec un BTS SIO SLAM :</p>
+          <ul>
+                  <li>Développeur d'applications informatiques</li>
+                  <li>Développeur informatique</li>
+                  <li>Analyste d'applications ou d'études</li>
+                  <li>Analyste programmeur</li>
+                  <li>Chargé d'études informatiques</li>
+                  <li>Informaticien d'études</li>
+                  <li>Programmeur analyste</li>
+                  <li>Programmeur d'applications</li>
+                  <li>Responsable des services applicatifs</li>
+                  <li>Technicien d'études informatiques</li>
+              </ul>
+  </div>
+</section>
+
+<section id="parcours">
+  <h1 style="text-align:center"><b>Cursus Scolaire</b></h1>
+  <div class="timeline">
+    <div class="timeline-item left">
+      <div class="content">
+        <h2>2023 - 2025 | BTS SIO SLAM</h2>
+        <p>CFA ITIS | Évry, France</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h2>2020 - 2023 | BAC PRO AGORA</h2>
+        <p>Lycée Polyvalent Pierre Mendès France | Ris-Orangis, France</p>
+      </div>
+    </div>
+    <div class="timeline-item left">
+      <div class="content">
+        <h2>2016 - 2020 | Brevet</h2>
+        <p>Collège Louise Michel | Corbeil Essonnes, France</p>
+      </div>
+    </div>
+  </div>
+
+  <h1 style="text-align:center"><b>Expériences Professionnelles</b></h1>
+  <div class="timeline">
+    <div class="timeline-item left">
+      <div class="content">
+        <h2>Janvier - Février 2025 | Assistant Polyvalent</h2>
+        <p>Latre JCKN | Corbeil Essonnes, France</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h2>Juin - Juillet 2024 | Stagiaire</h2>
+        <p>Souhila GUERFI | Évry, France</p>
+      </div>
+    </div>
+    <div class="timeline-item left">
+      <div class="content">
+        <h2>Mars 2023 | Assistant Chef de Projet Évènementiel</h2>
+        <p>CD UFOLEP | Évry, France</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h2>Septembre - Octobre 2022 | Instructeur</h2>
+        <p>Génération II Citoyenneté Intégration | Ris-Orangis, France</p>
+      </div>
+    </div>
+    <div class="timeline-item left">
+      <div class="content">
+        <h2>Décembre 2021 | Assistant Polyvalent</h2>
+        <p>Latre JCKN | Corbeil Essonnes, France</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h2>Décembre 2019 | Développeur Web</h2>
+        <p>GuideMe Technologies | Brétigny-sur-Orge, France</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projets">
+    <h1 style="text-align:center"><b>Mes Projets</b></h1>
+    <br>
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    ">
+  
+      <!-- Projet 1 -->
+      <a href="https://lien-projet-1.com" target="_blank" style="text-decoration: none; color: inherit;">
+        <div style="
+          background-color: white;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s;
+        " onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+  
+          <img src="img/Screenshot_GSB_CreationFicheFrais.png" alt="Projet 1" style="width: 100%; height: 200px; object-fit: cover;">
+  
+          <div style="padding: 1rem;">
+            <h3 style="margin: 0; font-size: 1.2rem;">GSB</h3>
+            <p style="margin-top: 0.5rem; color: #666;">L'application a pour but d'établir une gestion plus précise et uniforme 
+              entre les entités du laboratoire. Elle devra permettre aux visiteurs d'inscrire leurs dépenses, de visualiser la prise 
+              en charge des remboursements (enregistré, validé, remboursé).</p>
+          </div>
+        </div>
+      </a>
+  
+      <!-- Projet 2 -->
+      <a href="https://lien-projet-2.com" target="_blank" style="text-decoration: none; color: inherit;">
+        <div style="
+          background-color: white;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s;
+        " onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+  
+          <img src="img/php_site_web_enCours.webp" alt="Projet 2" style="width: 100%; height: 200px; object-fit: cover;">
+  
+          <div style="padding: 1rem;">
+            <h3 style="margin: 0; font-size: 1.2rem;">BookShare - Gestion de livres partagés (en cours)</h3>
+            <p style="margin-top: 0.5rem; color: #666;">Site web PHP/MySQL permettant aux utilisateurs d’ajouter, consulter et 
+              emprunter des livres facilement. Idéal pour gérer une petite bibliothèque communautaire.</p>
+          </div>
+        </div>
+      </a>
+  
+      <!-- Projet 3 -->
+      <a href="https://lien-projet-3.com" target="_blank" style="text-decoration: none; color: inherit;">
+        <div style="
+          background-color: white;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s;
+        " onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+  
+          <img src="img/Screenshot_AndroidStudio_EnCours.png" alt="Projet 3" style="width: 100%; height: 200px; object-fit: cover;">
+  
+          <div style="padding: 1rem;">
+            <h3 style="margin: 0; font-size: 1.2rem;">Gestion Multi-Services (en cours)</h3>
+            <p style="margin-top: 0.5rem; color: #666;">Application Android conçue pour gérer efficacement les stocks, 
+              la location de véhicules, et le suivi des notes scolaires, offrant une solution complète et intuitive pour simplifier 
+              la gestion quotidienne.</p>
+          </div>
+        </div>
+      </a>
+  
+    </div>
+  </section>
+  
+</section>
+
+<section id="veille-technologique">
+  <div id="veilletechno" class="content2">
+    <h1 style="text-align:center"><b>Veille Technologique</b></h1>
+    <br>
+    <h1  style="text-align:center">Qu'est-ce que la Veille Technologique ?</h1>
+
+    <p>La veille technologique est un processus systématique de collecte, d'analyse et
+        de diffusion d'informations sur les évolutions et les innovations technologiques
+        dans un domaine spécifique. Son objectif est de permettre à une organisation ou à
+        un individu de rester informé des avancées récentes, des tendances émergentes et
+        des opportunités technologiques afin de maintenir ou d'améliorer sa compétitivité.
+        <br>
+        <br>
+        En somme, la veille technologique est essentielle pour les entreprises et les
+        organisations souhaitant rester compétitives et innovantes dans un environnement
+        technologique en constante évolution. Elle permet d'anticiper les changements, de
+        saisir les opportunités et de se préparer aux défis futurs.
+    </p>
+
+    <h1 style="text-align:center">Thème : La Motion Capture</h1>
+
+    <p>La <b>motion capture (mocap)</b> est une technologie clé utilisée dans les domaines du cinéma, des jeux vidéo, de l'animation, et même 
+      dans la médecine. Elle permet de capturer les mouvements humains avec une grande précision pour les transposer dans des modèles 
+      numériques. Cette technologie a évolué pour devenir plus accessible, plus précise et de plus en plus intégrée à des environnements 
+      immersifs comme la réalité virtuelle (VR) et augmentée (AR).</p>
+
+      
+
+    <h1 style="text-align:center">Histoire et Évolution</h1>
+    <div class="paragraph">
+      <img src="img/motion_capture_planet_of_the_apes_different_step.webp" alt="GIF droite" class="gif-right" width="" height="250px">
+    <p>
+      La motion capture a émergé dans les années 1950, principalement dans le domaine de la recherche scientifique, où elle était utilisée 
+      pour analyser les mouvements humains et animaux. Cependant, c'est dans les années 1970 que la mocap a commencé à être utilisée dans 
+      le cinéma et les effets spéciaux, avec des expérimentations sur des films comme Star Wars.
+      <br>
+      <br>
+      Dans les années 1990, la technologie a fait un grand bond avec des films comme Jurassic Park et Forrest Gump, où des acteurs ont 
+      utilisé des capteurs pour animer des créatures ou des personnages virtuels. L'une des étapes marquantes fut le film The Matrix 
+      (1999), qui a popularisé la capture de mouvements complexes pour des scènes d’action en utilisant des systèmes comme ceux développés 
+      par Vicon et Motion Analysis.
+      <br>
+      <br>
+      Au début des années 2000, avec des films comme Avatar (2009), la mocap a franchi une nouvelle étape en capturant non seulement les 
+      mouvements corporels mais aussi les expressions faciales, révolutionnant ainsi l'animation des personnages en CGI.
+    </div>
+      <b>Technologies actuelles</b>
+      <br>
+      <br>
+      Les principales technologies de mocap se divisent en plusieurs catégories :
+      <br>
+      <br>
+      <ul>
+      <li>Mocap avec capteurs externes : Utilise des caméras infrarouges pour suivre des marqueurs placés sur le corps. Des leaders comme 
+      Vicon et OptiTrack offrent une haute précision pour des productions cinématographiques et des simulations sportives.</li>
+
+      <li>Mocap sans marqueurs : Cette approche, avec des technologies comme Xsens, capture les mouvements sans nécessiter de marqueurs 
+      visibles, offrant plus de flexibilité pour des applications variées.</li>
+
+      <li>Mocap portable : Des capteurs et gants légers, comme ceux de Perception Neuron, permettent une capture plus accessible et moins 
+      contraignante, idéale pour des studios indépendants ou des productions plus petites.</li>
+      </ul>
+      <br>
+      <b>Applications de la Motion Capture</b>
+      <br>
+      <br>
+      La mocap trouve des applications dans divers domaines :
+      <br>
+      <br>
+      <ul>
+      <li>Cinéma et animation : Elle permet de recréer des personnages réalistes et des scènes spectaculaires, comme dans Avatar ou les films 
+      de super-héros. Les avancées technologiques ont permis d'animer des personnages de manière plus précise et émotionnelle, notamment 
+      grâce à la capture faciale.</li>
+      
+      <li>Jeux vidéo : Des jeux comme Red Dead Redemption 2 ou The Last of Us Part II utilisent la mocap pour créer des animations fluides et 
+      réalistes, rendant l'expérience de jeu plus immersive.</li>
+
+      <li>Médecine : La mocap est utilisée pour analyser les mouvements humains dans des applications médicales, comme la rééducation physique 
+      ou l’étude des performances sportives.</li></p>
+      </ul>
+
+    <h1 style="text-align:center">Conclusion</h1>
+
+    <p>La motion capture a évolué d’une technologie de niche à un outil incontournable dans les industries créatives et scientifiques. Les 
+      innovations récentes, telles que l’intégration de l’IA pour améliorer la précision des captures et la mocap dans des environnements 
+      VR/AR, ouvrent de nouvelles possibilités pour les productions interactives et immersives. Malgré des avancées impressionnantes, des 
+      défis restent, notamment en termes de coûts et d’intégration dans les processus de production, mais la technologie continue 
+      d’évoluer rapidement, transformant ainsi les façons dont nous créons et interagissons avec des mondes virtuels.</p>
+</div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="bg-white text-black text-center text-lg-start mt-4">
+  <div class="container p-4">
+    <div class="row">
+      <!-- Section gauche -->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Jay Joël MASSAMBA DIMONEKENE</h5>
+        <p>
+          Portfolio réalisé dans le cadre du BTS SIO - SLAM. N'hésitez pas à me contacter pour toute opportunité ou collaboration.
+        </p>
+      </div>
+
+      <!-- Section droite -->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0 text-lg-end">
+        <h5 class="text-uppercase">Liens utiles</h5>
+        <ul class="list-unstyled">
+          <li><a href="#a-propos" class="text-black">À propos</a></li>
+          <li><a href="#parcours" class="text-black">Parcours</a></li>
+          <li><a href="#projets" class="text-black">Projets</a></li>
+        </ul>
+        <div class="social-icons mt-3">
+          <a href="https://github.com/ton-identifiant" target="_blank" title="Mon GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="mailto:ton.email@example.com" title="Envoyer un email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center p-3 bg-light">
+    © 2025 Jay Joël MASSAMBA DIMONEKENE - Tous droits réservés.
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const sections = document.querySelectorAll('section');
+    const links = document.querySelectorAll('.navbar-nav .nav-link');
+    let currentSection = '';
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        currentSection = section.id;
+      }
+    });
+
+    const heroImage = document.getElementById('hero-image');
+    const heroRect = heroImage.getBoundingClientRect();
+    if (heroRect.top <= window.innerHeight / 2 && heroRect.bottom >= window.innerHeight / 2) {
+      currentSection = 'hero-image';
+    }
+
+    links.forEach(link => {
+      link.classList.remove('active-bubble');
+      if (link.getAttribute('href').substring(1) === currentSection) {
+        link.classList.add('active-bubble');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
